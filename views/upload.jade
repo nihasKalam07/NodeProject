@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    if (!user)
+        a(href="/login") Login
+        br
+        a(href="/register") Register
+    if (user)
+        p You are currently logged in as #{user.username}
+
+
+            form(role='form', action="/upload",method="post", style='max-width: 300px;', enctype="multipart/form-data")
+                .form-group
+                    input.form-control(type='text', name="movieName", placeholder='movie name')
+                .form-group
+                    input.form-control(type='text', name="movieDetails", placeholder='details' style='min-height:150px;')
+                .form-group
+
+                    p Upload avatar image
+                        input.form-control(type='file', name="movieAvatar")
+
+                        p Upload video
+                            input.form-control(type='file', name="movieVideo")
+                button.btn.btn-default(type='submit') Submit
+
+        a(href="/logout") Logout

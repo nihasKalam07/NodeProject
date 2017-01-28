@@ -1,21 +1,11 @@
 extends layout
 
 block content
-  if (!user)
-    a(href="/login") Login
-    br
-    a(href="/register") Register
-  if (user)
-    p You are currently logged in as #{user.username}
+    if (!user)
+        a(href="/login") Login
+        br
+        a(href="/register") Register
+    if (user)
 
 
-      form(role='form', action="/upload",method="post", style='max-width: 300px;', enctype="multipart/form-data")
-        .form-group
-          input.form-control(type='text', name="movieName", placeholder='movie name')
-        .form-group
-          input.form-control(type='text', name="movieDetails", placeholder='details' style='min-height:150px;')
-        .form-group
-          input.form-control(type='file', name="movieAvatar")
-        button.btn.btn-default(type='submit') Submit
-
-    a(href="/logout") Logout
+        a(href="/upload") Upload movie details

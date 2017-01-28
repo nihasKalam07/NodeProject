@@ -1,9 +1,8 @@
 var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
+var Movie = require('../models/movie');
 var router = express.Router();
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
 
 
 router.get('/', function (req, res) {
@@ -42,13 +41,5 @@ router.get('/logout', function(req, res) {
 router.get('/ping', function(req, res){
     res.status(200).send("pong!");
 });
-
-router.post('/upload', upload.single('movieAvatar'), function (req, res, next) {
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
-    console.log(req.body);
-    console.log(req.file);
-    res.redirect('/');
-})
 
 module.exports = router;
