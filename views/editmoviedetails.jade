@@ -9,11 +9,11 @@ block content
         p You are currently logged in as #{user.username}
 
 
-            form(role='form', action="/upload",method="post", style='max-width: 300px;', enctype="multipart/form-data")
+            form(role='form', action="/editmoviedetails/" + movie._id , method="post", style='max-width: 300px;', enctype="multipart/form-data")
                 .form-group
-                    input.form-control(type='text', name="movieName", placeholder='movie name')
+                    input.form-control(type='text', name="movieName", placeholder='movie name', value= movie.name)
                 .form-group
-                    input.form-control(type='text', name="movieDetails", placeholder='details' style='min-height:150px;')
+                    input.form-control(type='text', name="movieDetails", placeholder='details' style='min-height:150px;', value= movie.details)
                 .form-group
 
                     p Upload avatar image

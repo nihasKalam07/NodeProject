@@ -5,8 +5,24 @@ var Movie = require('../models/movie');
 var router = express.Router();
 
 
+// router.get('/', function (req, res) {
+//     res.render('index', { user : req.user });
+// });
+
 router.get('/', function (req, res) {
-    res.render('index', { user : req.user });
+    console.log('movie list screen');
+
+    var query   = {};
+    var options = {
+        lean:     true,
+        offset:   0,
+        limit:    50
+    };
+
+    Movie.paginate(query, options).then(function(result) {
+        console.log(result);
+        res.render('movielist', { movielist : result, user : req.user });
+    });
 });
 
 router.get('/register', function(req, res) {

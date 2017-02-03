@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    a(href="/upload")
+        button.btn.btn-primary(type="button") Upload movie details
+    br
+    br
+    if (movielist.total > 0)
+        table(border='1' cellpadding='20dp' cellspacing='20dp')
+            thead
+                tr
+                    th(width="50", colspan="5", valign="top")
+                    th(width="200", colspan="5", valign="top") Name
+                    th(width="400", colspan="5", valign="top") Details
+            tbody
+                each item, i in movielist.docs
+                    tr
+                        td(width="50", colspan="5", valign="top")= i + 1
+                        td(width="200", colspan="5", valign="top")
+                            a(href='/moviedetails/' + item._id) #{item.name}
+
+                        td(width="400", colspan="5", valign="top")= item.details
+    if (movielist.total === 0)
+        h5 Movie list is empty. You can upload movies by clicking the link above.
+
+
+
+
+

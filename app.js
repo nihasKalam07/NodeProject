@@ -9,10 +9,15 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var dbConfig = require('./config/db.js');
 var expressSession = require('express-session');
+var methodOverride = require('method-override');
+var expressValidator = require('express-validator');
 
 
 var index = require('./routes/index');
 var upload = require('./routes/upload');
+var movielist = require('./routes/movielist');
+var moviedetails = require('./routes/moviedetails');
+var editmoviedetails = require('./routes/editmoviedetails');
 
 var app = express();
 
@@ -26,7 +31,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(methodOverride('_method'));
 app.use(expressSession({
     secret: 'keyboard cat',
     resave: false,
@@ -34,6 +42,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // passport config
 var Account = require('./models/account');
@@ -46,6 +55,9 @@ mongoose.connect(dbConfig.url);
 
 app.use('/', index);
 app.use('/upload', upload);
+// app.use('/movielist', movielist);
+app.use('/moviedetails', moviedetails);
+app.use('/editmoviedetails', editmoviedetails);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
