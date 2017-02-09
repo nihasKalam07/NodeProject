@@ -1,21 +1,135 @@
 doctype html
-html
+//if lt IE 7
+  html.no-js.lt-ie9.lt-ie8.lt-ie7
+//if IE 7
+  html.no-js.lt-ie9.lt-ie8
+//if IE 8
+  html.no-js.lt-ie9
+// [if gt IE 8] <!
+html.no-js
+    // <![endif]
     head
-        title= title
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+        title
+        meta(name='description', content='')
+        meta(name='viewport', content='width=device-width')
+        link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.css')
+        link(rel='stylesheet', href='/stylesheets/custom-styles.css')
+        link(rel='stylesheet', href='/stylesheets/font-awesome.css')
+        link(rel='stylesheet', href='/stylesheets/component.css')
+        link(rel='stylesheet', href='/stylesheets/font-awesome-ie7.css')
+        script(src='/javascripts/modernizr.custom.js')
+        script(src='/javascripts/modernizr-2.6.2-respond-1.1.0.min.js')
     body
+        //if lt IE 7
+          p.chromeframe
+            | You are using an
+            strong outdated
+            |  browser. Please
+            a(href='http://browsehappy.com/') upgrade your browser
+            |  or
+            a(href='http://www.google.com/chromeframe/?redirect=true') activate Google Chrome Frame
+            |  to improve your experience.
+        // This code is taken from http://twitter.github.com/bootstrap/examples/hero.html
+        .header-wrapper
+            .container
+                .row-fluid
+                    .site-name
+                        h1 MDB
+                    .menu-icons
+                        ul
+                            li
+                                a(href='#')
+                                    i.fw-icon-facebook.i
+                            li
+                                a(href='#')
+                                    i.fw-icon-twitter.i
+                            li
+                                a(href='#')
+                                    i.fw-icon-linkedin.i
+                            li
+                                if(movielist)
+                                    form#custom-search-form.form-search.form-horizontal.pull-right(role='form', action="/movielist/search/1" ,method="get")
+                                        .input-append
+                                            input.search-query(type='text', name="searchKey", placeholder='Enter movie name')
+                                            button.btn(type='submit')
+                                                i.fw-icon-search
+                    .cust-form
+                        form#custom-search-form.form-search.form-horizontal.pull-right
+                            input.search-query(type='text')
+                            button.btn(type='submit')
+                                i.fw-icon-search
+        .container
+            .menu
+                .navbar
+                    a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+                        i.fw-icon-th-list
+                    .nav-collapse.collapse
+                        ul.nav
+                            li.active
+                                a(href='/') Home
+                            if(user)
+                                li
+                                    a(href='/upload') Upload Movie
+                                li
+                                    a(href='/logout') Sign out
+                                li
+                                    a(href='#') #{ user.username }
+                            if(!user)
+                                li
+                                    if(!loginScreen)
+                                        a(href='/login') Sign in
+                                li
+                                    if(!registerScreen)
+                                        a(href='/register') Register
+
+
+
+
+                    // /.nav-collapse
+                .mini-menu
+                    label
+                        select.selectnav
+                            option(value='#', selected='') Home
+                            option(value='#') About
+                            option(value='#') → Another action
+                            option(value='#') → Something else here
+                            option(value='#') → Another action
+                            option(value='#') → Something else here
+                            option(value='#') Services
+                            option(value='#') Work
+                            option(value='#') Contact
+
+
+
         block content
 
-            if (error && error.length > 0)
-                br
-                h4.error-msg= error
-                br
-    br
-    br
-    if(user)
-        a(href="/logout") Logout
-
-    script(src='http://code.jquery.com/jquery.js')
-    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
+        .wrap.bg-black
+            .container
+                .row-fluid
+                    .span12
+                        .copy-rights
+                            | Copyright(c) website name.
+                            span
+                                | Designed by:
+                                a(href='http://www.alltemplateneeds.com') www.alltemplateneeds.com
+                            |  / Images from:
+                            a(href='http://www.wallcoo.net')  www.wallcoo.net
+        script(src='/javascripts/jquery-1.9.1.js')
+        script(src='/javascripts/bootstrap.js')
+        script(src='/javascripts/masonry.pkgd.min.js')
+        script(src='/javascripts/imagesloaded.js')
+        script(src='/javascripts/classie.js')
+        script(src='/javascripts/AnimOnScroll.js')
+        script.
+            new AnimOnScroll( document.getElementById( 'grid' ), {
+                minDuration : 0.4,
+                maxDuration : 0.7,
+                viewportFactor : 0.2
+            } );
+        script.
+            $('#myCarousel').carousel({
+                interval: 1800
+            });

@@ -1,24 +1,33 @@
 extends layout
 
 block content
-    if (!user)
-        a(href="/login") Login
-        br
-        a(href="/register") Register
-    if (user)
-        p You are currently logged in as #{user.username}
+    .container
+        .featured-content
+            .row-fluid
 
+                .span5
+                    .contact-form
+                        .block-title
 
-            form(role='form', action="/upload",method="post", style='max-width: 300px;', enctype="multipart/form-data")
-                .form-group
-                    input.form-control(type='text', name="movieName", placeholder='movie name')
-                .form-group
-                    input.form-control(type='text', name="movieDetails", placeholder='details' style='min-height:150px;')
-                .form-group
+                            h1 Upload movie
+                            p.lead
+                                != messages()
+                        .block-content
+                            form(role='form', action="/upload",method="post", style='max-width: 600px;', enctype="multipart/form-data")
+                                fieldset
+                                    input.input-block-level(type='text', name="movieName", placeholder='movie name')
+                                    textarea.input-block-level(type='text', name="movieDetails", placeholder='details', style='min-height:150px;', rows='10', cols='10', color= '#ff0000')
+                                    //textarea.input(rows='10', cols='10') Some text here
+                                    label.control-label()
+                                        | Upload avatar image
+                                        span.requerido  *
 
-                    p Upload avatar image
-                        input.form-control(type='file', name="movieAvatar")
+                                        input.form-control(type='file', name="movieAvatar", align='top')
+                                    label.control-label()
+                                        | Upload video
+                                        span.requerido  *
 
-                        p Upload video
-                            input.form-control(type='file', name="movieVideo")
-                button.btn.btn-default(type='submit') Submit
+                                        input.form-control(type='file', name="movieVideo")
+                                    button.btn(type='submit')
+                                        | Upload
+                                        i.fw-icon-arrow-right

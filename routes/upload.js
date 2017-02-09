@@ -40,11 +40,13 @@ router.post('/', cpUpload, function (req, res, next) {
     var errors = req.validationErrors();
     if (errors) {
         // return next(errors);
+
         console.log('error   ' + errors);
         var err = {
             message : errors[0].msg
         }
-        res.render('error', { error: err });
+        req.flash('message',errors[0].msg);
+        res.render('upload');
         // return;
     } else {
         // normal processing here

@@ -1,13 +1,61 @@
 extends layout
-
 block content
-    if (!user)
-        a(href="/login") Login
-        br
-        a(href="/register") Register
-    if (user)
+        .container.bg-white
+            .row-fluid
+                .span12
+                    .main-caption
+                        h1 Top rated movies
+                        //h6 Nullam malesuada erat ut turpis Suspendisse urna
+                        //a.btn(href='#') lorem ipsum dlo
+
+        .container
+            .featured-content
+                .row-fluid
+                    .span8
+                        .block
+                            if (movielist.total > 0)
+                                table(border='0' cellpadding='20dp' cellspacing='20dp')
+                                    //thead
+                                    //    tr
+                                    //        th(width="50", colspan="5", valign="top")
+                                    //        th(width="200",height='200' colspan="5", valign="top")
+                                    //        th(width="400", colspan="5", valign="top")
+                                    tbody
+                                        each item, i in movielist.docs
+                                            tr()
+                                                td(class="span1", width="50", colspan="5")= (i + 1) + (limit * (pageNumber - 1))
+                                                //td(width="200", colspan="5", valign="top")
+                                                //    a(href='/moviedetails/' + item._id) #{item.name}
+                                                //
+                                                //td(width="400", colspan="5", valign="top")= item.details
+                                                td(class="span2", width="50", colspan="5")
+
+                                                    img.img-rounded(src='/uploads/' + item.avatarUrl, alt='')
 
 
-        //a(href="/upload") Upload movie details
 
+                                                td(class="span5", width="50", colspan="5")
+
+                                                    .block
+                                                        h4
+                                                            a(href='/moviedetails/' + item._id) #{item.name}
+                                                        p
+                                                            | #{item.details}
+                                                        a.btn(href='/moviedetails/' + item._id)
+                                                            | more
+                                                            i.fw-icon-arrow-right
+
+                                if (movielist.total === 0)
+                                    h5 Movie list is empty. You can upload movies by clicking the link above.
+                                br
+                                br
+        .container.bg-white
+            .row-fluid
+                .span12
+                    .main-caption
+                                    -for (var i = 1; i < totalPages + 1 ; ++i)
+                                        if (isSearch)
+                                            a(href="/movielist/search" + i )    #{ i } &nbsp;
+                                        if (!isSearch)
+                                            a(href="/movielist/" + i )    #{ i } &nbsp;
 

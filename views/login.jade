@@ -1,16 +1,23 @@
 extends layout
 
 block content
+
     .container
-        h1 Login Page
-        p.lead Say something worthwhile here.
-        br
-        form(role='form', action="/login",method="post", style='max-width: 300px;')
-            .form-group
-                input.form-control(type='text', name="username", placeholder='Enter Username')
-            .form-group
-                input.form-control(type='password', name="password", placeholder='Password')
-            button.btn.btn-default(type='submit') Submit
-    &nbsp;
-    //a(href='/')
-    //    button.btn.btn-primary(type="button") Cancel
+        .featured-content
+            .row-fluid
+
+                .span4
+                    .contact-form
+                        .block-title
+
+                            h1 Login Page
+                            p.lead
+                                != messages()
+                        .block-content
+                            form(role='form', action="/login",method="post", style='max-width: 300px;')
+                                fieldset
+                                    input.input-block-level(type='text', name="username", placeholder='Enter Username')
+                                    input.input-block-level(type='password', name="password", placeholder='Password')
+                                    button.btn(type='submit')
+                                        | Login
+                                        i.fw-icon-arrow-right

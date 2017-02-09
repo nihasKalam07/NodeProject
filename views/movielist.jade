@@ -5,6 +5,12 @@ block content
         button.btn.btn-primary(type="button") Upload movie details
     br
     br
+    form(role='form', action="/movielist/search/1" ,method="get", style='max-width: 400px;')
+        .form-group
+            input.form-control(type='text', name="searchKey", placeholder='Enter movie name')
+        button.btn.btn-default(type='submit') Search
+    br
+    br
     if (movielist.total > 0)
         table(border='1' cellpadding='20dp' cellspacing='20dp')
             thead
@@ -15,14 +21,20 @@ block content
             tbody
                 each item, i in movielist.docs
                     tr
-                        td(width="50", colspan="5", valign="top")= i + 1
+                        td(width="50", colspan="5", valign="top")= (i + 1) + (limit * (pageNumber - 1))
                         td(width="200", colspan="5", valign="top")
                             a(href='/moviedetails/' + item._id) #{item.name}
 
                         td(width="400", colspan="5", valign="top")= item.details
     if (movielist.total === 0)
         h5 Movie list is empty. You can upload movies by clicking the link above.
-
+    br
+    br
+    -for (var i = 1; i < totalPages + 1 ; ++i)
+        if (isSearch)
+            a(href="/movielist/search" + i )       #{ i }
+        if (!isSearch)
+            a(href="/movielist/" + i )       #{ i }
 
 
 

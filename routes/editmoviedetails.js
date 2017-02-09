@@ -30,37 +30,50 @@ router.post('/:id', cpUpload, function (req, res, next) {
     console.log(req.files['movieVideo'][0]);
     var avatar = req.files['movieAvatar'][0];
     var video = req.files['movieVideo'][0];
-    if (req.body.movieName === '') {
-        console.log('Movie name is mandatory');
-        res.redirect('/');
-    }
-    var fields = {
-        name: req.body.movieName,
-        details: req.body.movieDetails,
-        avatarName: avatar.originalname,
-        avatarUrl: avatar.filename,
-        videoName: video.originalname,
-        videoUrl: video.filename
-    }
 
-    Movie.findOneAndUpdate({_id: new ObjectId(req.params.id)},
-        {
-            $set: fields
-        },
-        // {new: true},
-        function (err, doc) {
-            if (err) {
-                console.log("Something wrong when updating data!");
-            } else {
-                var imagePath = path.join(__dirname + '/..') + "/uploads/" + doc.avatarUrl;
-                var videoPath = path.join(__dirname + '/..') + "/uploads/" + doc.videoUrl;
-                fileHelper.deleteFile(imagePath, 'successfully deleted image');
-                fileHelper.deleteFile(videoPath, 'successfully deleted video');
-                console.log("successfully updated!");
-                console.log(doc);
-                res.redirect('/');
-            }
-        });
+    req.checkBody("movieName", "Movie name cannot be empty").notEmpty();
+    req.checkBody("movieDetails", "Movie Details cannot be empty").notEmpty();
+    var errors = req.validationErrors();
+    console.log('error1   ' + errors);
+    if (errors) {
+        // return next(errors);
+
+        console.log('error   ' + errors);
+        var err = {
+            message : errors[0].msg
+        }
+        req.flash('message',errors[0].msg);
+        res.render("/editmoviedetails/" + req.params.id);
+        // return;
+    } else {
+        var fields = {
+            name: req.body.movieName,
+            details: req.body.movieDetails,
+            avatarName: avatar.originalname,
+            avatarUrl: avatar.filename,
+            videoName: video.originalname,
+            videoUrl: video.filename
+        }
+
+        Movie.findOneAndUpdate({_id: new ObjectId(req.params.id)},
+            {
+                $set: fields
+            },
+            // {new: true},
+            function (err, doc) {
+                if (err) {
+                    console.log("Something wrong when updating data!");
+                } else {
+                    var imagePath = path.join(__dirname + '/..') + "/uploads/" + doc.avatarUrl;
+                    var videoPath = path.join(__dirname + '/..') + "/uploads/" + doc.videoUrl;
+                    fileHelper.deleteFile(imagePath, 'successfully deleted image');
+                    fileHelper.deleteFile(videoPath, 'successfully deleted video');
+                    console.log("successfully updated!");
+                    console.log(doc);
+                    res.redirect('/');
+                }
+            });
+    }
 });
 
 module.exports = router;

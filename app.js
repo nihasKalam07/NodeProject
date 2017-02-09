@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,6 +13,8 @@ var dbConfig = require('./config/db.js');
 var expressSession = require('express-session');
 var methodOverride = require('method-override');
 var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var messages = require('express-messages');
 
 
 var index = require('./routes/index');
@@ -31,7 +35,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(expressValidator());
+app.use(expressValidator({
+    customValidators: {
+        isArray: function(value) {
+            return Array.isArray(value);
+        },
+        gte: function(param, num) {
+            return param >= num;
+        },
+        lte: function(param, num) {
+            return param <= num;
+        }
+    }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(methodOverride('_method'));
@@ -40,6 +56,11 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
 }));
+app.use(flash());
+app.use(function (req, res, next) {
+    res.locals.messages = messages(req, res);
+    next();
+});
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -55,7 +76,7 @@ mongoose.connect(dbConfig.url);
 
 app.use('/', index);
 app.use('/upload', upload);
-// app.use('/movielist', movielist);
+app.use('/movielist', movielist);
 app.use('/moviedetails', moviedetails);
 app.use('/editmoviedetails', editmoviedetails);
 
