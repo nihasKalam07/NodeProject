@@ -31,7 +31,7 @@ router.get('/:id', function (req, res) {
                 videoPath: videoPath,
                 videoPlaceholderPath: '/images/video_placeholder.jpg',
                 user: req.user,
-                individualRating: ""
+                overallRating: movie.rating > 0 ? 'This movies overall rating is ' + movie.rating : ''
             });
         } else {
             console.log('user exists');
@@ -52,7 +52,7 @@ router.get('/:id', function (req, res) {
                                 videoPlaceholderPath: '/images/video_placeholder.jpg',
                                 user: req.user,
                                 overallRating: movie.rating > 0 ? 'This movies overall rating is ' + movie.rating : '',
-                                individualRating: rating === null ? 'And you can rate this movie' : rating.rating
+                                individualRating: 'And you can rate this movie'
                             });
                         } else {
                             res.render('moviedetails', {

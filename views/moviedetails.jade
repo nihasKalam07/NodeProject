@@ -14,15 +14,15 @@ block content
                                     img.img-rounded(src=imagePath, alt='')
                                     br
                                 .block-content
-                                    if (user)
-                                        p
-                                            h5 #{ overallRating } #{ individualRating }
-                                            br
-                                            | #{ movie.details}
-                                            br
-                                            br
-                                            br
-                                            br
+                                    p
+                                        h5 #{ overallRating } #{ individualRating }
+                                        br
+                                        | #{ movie.details}
+                                        br
+                                        br
+                                        br
+                                        br
+
 
                         .border
 
@@ -46,16 +46,17 @@ block content
                             form(role='form', action="/moviedetails/" + movie._id + "?_method=DELETE",method="post", style='max-width: 400px;')
                                 <input type="hidden" name="_method" value="delete"/>
                                 button.btn.btn-default(type='submit') Delete
-                    .span6
-                        .block
-                            .span3(align='bottom')
-                                span.text-center Enter your rating on a scale of one to five
-                            .span2
-                                form(role='form', action="/moviedetails/ratemovie/" + movie._id ,method="post", style='max-width: 400px;')
-                                    .form-group
-                                        input.form-control(type='text', name="rating", placeholder='Rate', style='max-width: 50px;')
-                                        &nbsp;
-                                        &nbsp;
-                                        button.btn.btn-default(type='submit') Rate
+                    if (user)
+                        .span6
+                            .block
+                                .span3(align='bottom')
+                                    span.text-center Enter your rating on a scale of one to five
+                                .span2
+                                    form(role='form', action="/moviedetails/ratemovie/" + movie._id ,method="post", style='max-width: 400px;')
+                                        .form-group
+                                            input.form-control(type='text', name="rating", placeholder='Rate', style='max-width: 50px;')
+                                            &nbsp;
+                                            &nbsp;
+                                            button.btn.btn-default(type='submit') Rate
 
 

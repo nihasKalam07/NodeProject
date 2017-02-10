@@ -13,18 +13,22 @@ block content
                         .block-content
                             form(role='form', action="/editmoviedetails/" + movie._id , method="post", style='max-width: 300px;', enctype="multipart/form-data")
                                 fieldset
-                                    input.input-block-level(type='text', name="movieName", placeholder='movie name', value= movie.name)
-                                    textarea.input-block-level(type='text', name="movieDetails", placeholder='details', style='min-height:150px;', rows='10', cols='10', color= '#ff0000') #{ movie.details }
+                                    input.input-block-level(type='text', name="movieName", placeholder='movie name', value= movie.name,
+                                    required, data-required-msg='Password is required')
+                                    textarea.input-block-level(type='text', name="movieDetails", placeholder='details', style='min-height:150px;', rows='10', cols='10', color= '#ff0000',
+                                    required, data-required-msg='Password is required') #{ movie.details }
                                     label.control-label()
                                         | Upload avatar image
                                         span.requerido  *
 
-                                        input.form-control(type='file', name="movieAvatar", align='top')
+                                        input.form-control(type='file', name="movieAvatar", align='top',
+                                        required, data-required-msg='Password is required')
                                     label.control-label()
                                         | Upload video
                                         span.requerido  *
 
-                                        input.form-control(type='file', name="movieVideo")
+                                        input.form-control(type='file', name="movieVideo",
+                                        required, data-required-msg='Password is required')
                                     button.btn(type='submit')
                                         | Submit
                                         i.fw-icon-arrow-right
